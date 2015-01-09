@@ -3,10 +3,10 @@ define(['marionette', 'js/views/task_main', 'chart'], function (Marionette, Main
 	var TaskListView = Marionette.CollectionView.extend({
 		childView: MainTaskItemView,
 		initialize: function() {
-	        this.listenTo(this.collection, 'sync', this.render);		        
+			this.listenTo(this.collection, 'change sync', this.render);
 		},		
 		onRender: function () {
-			
+
 			var sectors = {
 				overdue: {
 	                value: 0,

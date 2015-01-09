@@ -4,3 +4,6 @@
 [remote "github"]
 	url = https://github.com/Dm84/taskman.git
 	excludesfile = +.githubignore
+	
+[branch "github"]
+	excludesfile = +.githubignore	

@@ -127,6 +127,10 @@ input {
 	width: 100%;
 }
 
+.task-create-input.invalid {
+	border: 1px solid #AC2925;
+}
+
 .task-create-inputs__desc {
 	height: 119px;
 }

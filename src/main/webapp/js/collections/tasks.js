@@ -6,6 +6,7 @@ define(['backbone', 'js/models/task'], function (Backbone, TaskModel) {
 		
 		initialize: function (attributes, options) {
 			this.url = options.url;
+			this.fetch();
 		},		
 		comparator: function (task) {
 			return task.get('deadline');

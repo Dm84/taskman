@@ -1,5 +1,5 @@
-define(	['jquery', 'marionette', 'js/views/task_search'], 
-		function ($, Marionette, SearchTaskItemView) 
+define(	['jquery', 'marionette', 'js/views/task_search', 'js/models/task'], 
+		function ($, Marionette, SearchTaskItemView, TaskModel) 
 {	
 	var HeaderView = Marionette.CompositeView.extend({
 		template: '#header-template',
@@ -35,7 +35,8 @@ define(	['jquery', 'marionette', 'js/views/task_search'],
 		
 		ui_class: {
 			completed_checked: 'task-completed-icon_status_true',
-			btn_danger: 'btn-danger'
+			btn_danger: 'btn-danger',
+			invalid: 'invalid'
 		},
 		
 		events: {
@@ -68,12 +69,16 @@ define(	['jquery', 'marionette', 'js/views/task_search'],
 				this.popup_toggle();
 			},
 			"focus @ui.desc_input, @ui.date_input": function (e) {
-				this.ui.save_input.removeClass(this.ui_class.btn_danger);					
+				this.ui.save_input.removeClass(this.ui_class.btn_danger);
+				$(e.target).removeClass('invalid');
 			},
 			"click @ui.completed_icon": function (e) {
 				this.ui.completed_icon.toggleClass(this.ui_class.completed_checked);
 			},				
-			"click @ui.save_input": function (e) {					
+			"click @ui.save_input": function (e) {
+
+				var deadline = new Date();
+
 				try {
 					var dateVal = this.ui.date_input.val();
 					
@@ -85,21 +90,26 @@ define(	['jquery', 'marionette', 'js/views/task_search'],
 						year = parseInt(date[2], 10),
 						hours = parseInt(time[0], 10), 
 						minutes = parseInt(time[1], 10),
-						deadline = new Date(year, month, day, hours, minutes, 0, 0);
-					
-					this.mainCollection.create({
-						description: this.ui.desc_input.val(),
-						deadline: deadline.getTime(),
-						completed: this.ui.completed_icon.hasClass(this.ui_class.completed_checked)
-					}, {
-						wait: true, 
-						error: _.bind(this.bad_create, this), 
-						success: _.bind(this.popup_toggle, this)
-					});																						
+						deadline = new Date(year, month, day, hours, minutes, 0, 0);				
+																						
 				} catch (exception) {
-					this.bad_create();
+					this.bad_deadline();
 				}
 				
+				var model = new TaskModel({
+					description: this.ui.desc_input.val(),
+					deadline: deadline.getTime(),
+					completed: this.ui.completed_icon.hasClass(this.ui_class.completed_checked)
+				});
+
+				this.listenToOnce(model, 'invalid', _.bind(this.bad_create, this));
+
+				this.mainCollection.create(model, {
+					wait: true,
+					error: _.bind(this.bad_create, this),
+					success: _.bind(this.popup_toggle, this),
+					url: this.mainCollection.url
+				});
 			}				
 		},
 		
@@ -107,9 +117,28 @@ define(	['jquery', 'marionette', 'js/views/task_search'],
 			this.ui.popup_create.toggle(500);
 		},
 		
-		bad_create: function (model, response) {
+		bad_create: function (model, response) {	
+
 			this.ui.save_input.addClass(this.ui_class.btn_danger);
+
+			for (field in response)
+			{
+				switch (response[field])
+				{
+					case 'deadline': this.bad_deadline(); break;
+					case 'description': this.bad_description(); break;
+				}
+			}
+
+		},
+		bad_deadline: function () {
+			this.ui.date_input.addClass(this.ui_class.invalid);
+		},
+		bad_description: function () {
+			this.ui.desc_input.addClass(this.ui_class.invalid);
 		}
+
+
 	});
 	
 	return HeaderView;

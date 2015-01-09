@@ -3,9 +3,34 @@ define(['underscore', 'backbone'], function (_, Backbone) {
 	var Model = Backbone.Model.extend({			
 
 		state: 'todo',
+
+		defaults: {
+			description: '',
+			deadline: (new Date()).getTime(),
+			completed: false,
+		},	
+
+		validate: function (attrs) {
+
+			var errors = [];
+
+			if (typeof attrs.deadline !== 'number' || attrs.deadline < (new Date()).getTime()) {
+				errors.push('deadline');
+			}
+
+			if (typeof attrs.description !== 'string' || attrs.description.length === 0) {
+				errors.push('description');
+			}
+
+			if (errors.length) return errors;
+		},
 		
 		initialize: function (attributes, options) {
-			
+			this.updateState();
+			this.on('change', function () { this.updateState(); });
+		},
+
+		updateState: function () {
 			var now = new Date(), nowMs = now.getTime(), 
 			deadlineMs = this.get('deadline'), 
 			deadlineDate = new Date(deadlineMs),
@@ -26,12 +51,13 @@ define(['underscore', 'backbone'], function (_, Backbone) {
 				}
 			}
 		},
+
 		complete: function () {
 			this.sync(null, this, { 
 				url: this.url() + '/complete', 
 				type: 'post',
 				success: _.bind(this.set, this, {completed: true})
-			});
+			});			
 		}
 	});
 	
