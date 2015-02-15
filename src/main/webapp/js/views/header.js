@@ -1,8 +1,11 @@
-define(	['jquery', 'marionette', 'js/views/task_search', 'js/models/task'], 
-		function ($, Marionette, SearchTaskItemView, TaskModel) 
+define(	['jquery', 'marionette', 'backbone', 'js/views/task_search', 'js/models/task'], 
+		function ($, Marionette, Backbone, SearchTaskItemView, TaskModel) 
 {	
 	var HeaderView = Marionette.CompositeView.extend({
 		template: '#header-template',
+
+		model: new Backbone.Model({dateNow: (new Date).getTime()}),
+
 		childView: SearchTaskItemView,
 		childViewContainer: ".task-list_block_search",
 		currentQuery: '',

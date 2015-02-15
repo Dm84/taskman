@@ -15,6 +15,11 @@ input {
 	margin: 0 auto;
 }
 
+.loader {
+	min-height: 16px;
+	background: url("../images/loader.gif") center center no-repeat;
+}
+
 .header {
 
 	padding: 19px 0 0 19px;	
@@ -23,6 +28,17 @@ input {
 	box-shadow: 0px 4px 4px #ddd;
 	margin-bottom: 50px;
 	position: relative; top: 0; left: 0;
+}
+
+.header-date {
+	position: absolute;
+	top: 96px;
+	left: 0;
+	width: 100%;
+
+	font-size: 16px;
+	color: #b8b8b8;
+	text-align: right;
 }
 
 .create-task-icon {
@@ -87,13 +103,23 @@ input {
 .task-completed-icon {
 	position: absolute; top: 0; left: 0;
 	width: 32px; height: 32px;
-	background: url(../images/check-empty.png) no-repeat;
-	cursor: pointer;
 }
 
 .task-completed-icon_status_true {
 	background: url(../images/check-checked.png) no-repeat;
+	cursor: default;
 }
+
+.task-completed-icon_status_false {
+	background: url("../images/check-empty.png") no-repeat;
+	cursor: pointer;
+}
+
+
+.task-completed-icon_status_wait {
+	background: url("../images/loader.gif") center center no-repeat;
+}
+
 
 .task-date {
 	font-size: 20px;	

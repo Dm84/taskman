@@ -17,7 +17,6 @@ public class Task {
 	private String description;    
     
     @Column(name="deadline", nullable=false)
-    @Future
     private java.util.Date deadline;
     
     @Column(name="completed")
