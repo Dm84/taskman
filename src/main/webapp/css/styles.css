@@ -1,4 +1,38 @@
 
+.popup { 
+	
+	margin: 0;
+	position: absolute;
+	z-index: 100;	
+}
+
+.popup-content {	
+
+	background: #fff;
+	border: 1px solid #b8b8b8;
+	border-radius: 4px;
+
+	padding: 16px;
+}
+
+@media screen and (max-width: 420px) {
+	.content {
+		font-size: 20px;
+	}
+	
+	.task-date {
+		font-size: 12px;	
+	}
+	
+	.task-item_block_search {
+		font-size: 13px;
+	}
+	
+	.task-date_block_search {
+		font-size: 8px;
+	}
+}
+
 input {
 	outline: none;
 }
@@ -20,29 +54,42 @@ input {
 	background: url("../images/loader.gif") center center no-repeat;
 }
 
+/*=====================================================================*/
+
 .header {
+
+	margin-bottom: 10px;
+	position: relative; top: 0; left: 0;
+}
+
+.header-bar {
 
 	padding: 19px 0 0 19px;	
 	height: 85px;
 	background: #bfbfbf;
 	box-shadow: 0px 4px 4px #ddd;
-	margin-bottom: 50px;
-	position: relative; top: 0; left: 0;
 }
 
 .header-date {
-	position: absolute;
+	/*position: absolute;
 	top: 96px;
 	left: 0;
-	width: 100%;
+	width: 100%;*/
 
+	height: 40px;
 	font-size: 16px;
 	color: #b8b8b8;
 	text-align: right;
 }
 
 .create-task-icon {
-	position: absolute; right: 30px; top: 27px;
+
+	position: absolute; right: 0px; top: 10px;
+
+	/*float: right;
+	margin-right: 30px;
+	margin-top: 10px;*/
+
 	width: 31px; height: 31px;
 	background: url(../images/cross.png) no-repeat;
 	cursor: pointer;
@@ -51,14 +98,26 @@ input {
 .search-block {
 
 	position: relative; top: 0; left: 0;
-	max-width: 348px;
-	width: 70%;
+	padding-right: 45px;
+	max-width: 405px;
+	margin-right: 15px;
+
+	/*
+	width: 70%;*/
+
+	/*margin-right: 75px;*/
+}
+
+.search-input-bar {
+
+	position: relative; top: 0; left: 0;
 	height: 47px;
 
 	padding: 5px 10px 0 60px;
 	background: #eee url(../images/icon-search.png) 12px center no-repeat;
 
 	border-radius: 10px;	
+
 }
 
 .search-input {	
@@ -72,6 +131,7 @@ input {
 }
 
 .popup_task_search {	
+
 	width: 100%;
 	height: 257px;	
 	left: 0px;
@@ -81,12 +141,52 @@ input {
 .popup_task_search::before {
     content: ''; 
     position: absolute; /* Абсолютное позиционирование */
-    left: 50px; top: -36px; /* Положение треугольника */
+    left: 50px; top: -34px; /* Положение треугольника */
     border: solid transparent; /* Прозрачные границы */    
     border-bottom: solid #fff; /* Добавляем треугольник */
     border-width: 15px 15px 21px;
 }
 
+.popup_task_create {
+	left: 0;
+	width: 100%;
+	top: 110px;
+}
+
+.task-create-inputs {
+	position: relative; top: 0; left: 0;
+	padding-left: 50px;	
+}
+
+.task-create-input {
+	border: 1px solid #b8b8b8;
+	display: block;
+	width: 100%;
+}
+
+.task-create-input.invalid {
+	border: 1px solid #AC2925;
+}
+
+.task-create-inputs__desc {
+	height: 119px;
+}
+
+.task-create-inputs__date {	
+	height: 38px;
+	margin: 20px 0;	
+}
+
+.popup_task_create::before {
+    content: ''; 
+    position: absolute; /* Абсолютное позиционирование */
+    right: 30px; top: -34px; /* Положение треугольника */
+    border: solid transparent; /* Прозрачные границы */    
+    border-bottom: solid #fff; /* Добавляем треугольник */
+    border-width: 15px 15px 21px;
+}
+
+/*=====================================================================*/
 
 .task-list {
 	margin: 0 0 0 28px;
@@ -123,56 +223,6 @@ input {
 
 .task-date {
 	font-size: 20px;	
-}
-
-.popup { 
-	
-	padding: 16px;
-	margin: 0;
-	background: #fff;
-	border: 1px solid #b8b8b8;
-	border-radius: 4px;
-	position: absolute;
-	z-index: 100;	
-}
-
-.popup_task_create {
-	left: 0;
-	width: 100%;
-	top: 90px;
-}
-
-.task-create-inputs {
-	position: relative; top: 0; left: 0;
-	padding-left: 50px;	
-}
-
-.task-create-input {
-	border: 1px solid #b8b8b8;
-	display: block;
-	width: 100%;
-}
-
-.task-create-input.invalid {
-	border: 1px solid #AC2925;
-}
-
-.task-create-inputs__desc {
-	height: 119px;
-}
-
-.task-create-inputs__date {	
-	height: 38px;
-	margin: 20px 0;	
-}
-
-.popup_task_create::before {
-    content: ''; 
-    position: absolute; /* Абсолютное позиционирование */
-    right: 30px; top: -36px; /* Положение треугольника */
-    border: solid transparent; /* Прозрачные границы */    
-    border-bottom: solid #fff; /* Добавляем треугольник */
-    border-width: 15px 15px 21px;
 }
 
 .task-list_block_search {	
@@ -240,20 +290,3 @@ input {
 	position: relative; top: 0; left: 0;
 }
 
-@media screen and (max-width: 420px) {
-	.content {
-		font-size: 20px;
-	}
-	
-	.task-date {
-		font-size: 12px;	
-	}
-	
-	.task-item_block_search {
-		font-size: 13px;
-	}
-	
-	.task-date_block_search {
-		font-size: 8px;
-	}
-}
